@@ -1,6 +1,7 @@
-<div>
+<ul>
   <% @users.each do |user| %>
-    <%= user.first_name %> </br>
-    <%= user.last_name %>
+    <li>
+      <%= user.id %> <%= user.first_name %> <%= user.last_name %>
+    </li>
   <% end %>
-</div>
+</ul>
