@@ -1,0 +1,27 @@
+<% provide(:title, 'Аутентификация') %>
+<div class="sessions-new-page">
+    <h1 class="sessions-new-page__title">Аутентификация</h1>
+
+<div class="row form-group">
+  <div class="col-md-4 offset-md-4">
+
+    <%= form_for(:session, url: sessions_path) do |f| %>
+
+    <div class="form-group">
+      <%= f.label :email, class: "form-control-label" %>
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, class: "form-control-label" %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "Войти", class: "btn btn-lg btn-primary btn-block" %>
+    <% end %>
+    </div>
+    <p>Еще не зарегистрировались? <%= link_to "Регистрация!", signup_path %></p>
+
+  </div>
+</div>
+
+</div>

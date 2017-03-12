@@ -1,8 +1,18 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, @user.first_name) %>
+
+<div class="users-show">
+
+<%= render 'shared/notice_messages' %>
+
+<div class="users-show__edit">
+  <%= link_to edit_user_path(@user), class: "btn btn-primary users-show__edit__link" do %>
+  <i class="fa fa-pencil" aria-hidden="true"></i>
+  <% end %>
+</div>
 
 <p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
+  <strong>User name:</strong>
+  <%= @user.first_name %> <%= @user.second_name %>
 </p>
 
 <p>
@@ -11,19 +21,18 @@
 </p>
 
 <p>
-  <strong>Second name:</strong>
-  <%= @user.second_name %>
-</p>
-
-<p>
   <strong>Created at:</strong>
   <%= @user.created_at %>
 </p>
 
 <p>
-  <strong>Latest login:</strong>
-  <%= @user.latest_login %>
+  <strong>Updated at:</strong>
+  <%= @user.updated_at %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>
+  <strong>Latest signin:</strong>
+  <%= @user.latest_signin %>
+</p>
+
+</div>

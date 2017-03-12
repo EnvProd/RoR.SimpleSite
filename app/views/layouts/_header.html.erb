@@ -24,12 +24,24 @@
                   </li>
                 </ul>
                 <ul class="navbar-nav ">
+                  <% if signed_in? %>
                   <li class="nav-item active">
                     <a class="nav-link" href="/"><i class="fa fa-bell" aria-hidden="true"></i></a>
                   </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link btn dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <%= current_user.first_name %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <%= link_to "Мой профиль", "#", class: "btn" %>
+                      <%= link_to "Выйти", signout_path, class: "btn" %>
+                    </div>
+                  </li>
+                <% else %>
                   <li class="nav-item">
                     <%= link_to "Войти", signin_path, class: "btn btn-primary" %>
                   </li>
+                <% end %>
                 </ul>
               </div>
           </div>

@@ -1,6 +1,32 @@
 <% provide(:title, 'Регистрация') %>
-<h1>New User</h1>
+<div class="users-new-page">
+    <h1 class="users-new-page__title">Регистрация</h1>
 
-<%= render 'form', user: @user %>
+<div class="row form-group">
+  <div class="col-md-4 offset-md-4">
 
-<%= link_to 'Back', users_path %>
+
+    <%= form_for(@user) do |f| %>
+    <%= render 'shared/error_messages' %>
+    <div class="form-group">
+      <%= f.label :first_name, class: "form-control-label" %>
+      <%= f.text_field :first_name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: "form-control-label" %>
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, class: "form-control-label" %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation, "rePassword", class: "form-control-label" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+      <%= f.submit "Зарегистрироваться", class: "btn btn-lg btn-primary btn-block" %>
+    <% end %>
+  </div>
+</div>
+
+</div>
