@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root  'static_pages#home'
-  match '/signin',    to: 'static_pages#signin',    via: 'get'
+  match '/signin',    to: 'users#new',    via: 'get'
+  match '/signup',    to: 'users#new',    via: 'get'
   resources :notifications
   resources :users
 
