@@ -11,7 +11,7 @@
                     <%= link_to "Главная", '/', class: "nav-link btn" %>
                   </li>
                   <li class="nav-item">
-                    <%= link_to "Пользователи", '/', class: "nav-link btn" %>
+                    <%= link_to "Пользователи", users_path, class: "nav-link btn" %>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link btn dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,8 +33,10 @@
                       <%= current_user.first_name %>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <%= link_to "Мой профиль", "#", class: "btn" %>
-                      <%= link_to "Выйти", signout_path, class: "btn" %>
+                      <%= link_to "Мой профиль", current_user, class: "dropdown-item btn" %>
+                      <%= link_to "Настройки", edit_user_path(current_user), class: "dropdown-item btn" %>
+                      <div class="dropdown-divider"></div>
+                      <%= link_to "Выйти", signout_path, class: "dropdown-item btn" %>
                     </div>
                   </li>
                 <% else %>

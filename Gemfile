@@ -37,6 +37,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'font-awesome-sass'
+gem 'will_paginate', '3.1.5'
+gem 'bootstrap-will_paginate', '0.0.11'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

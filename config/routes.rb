@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   match '/signin',    to: 'sessions#new',    via: 'get'
   match '/signout',    to: 'sessions#destroy',    via: 'get'
   match '/signup',    to: 'users#new',    via: 'get'
+  match '/registred',    to: 'static_pages#user_need_confirmed',    via: 'get'
   resources :notifications
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
