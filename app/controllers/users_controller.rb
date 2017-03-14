@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :update_name, :update_email, :update_password, :destroy]
-  before_action :signed_in_user, only: [:index, :edit, :update, :update_name, :update_email, :update_password, :destroy]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :admin_user,     only: [:destroy, :update_confirmed]
+  before_action :signed_in_user, only: [:show, :index, :edit, :update]
+
+
   # GET /users
   # GET /users.json
   def index
@@ -55,17 +57,18 @@ class UsersController < ApplicationController
   end
 
   def update_name
-    @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    @user = User.find(params[:user_id])
+    if @user.update_attributes(first_name: params[:user][:first_name], second_name: params[:user][:second_name])
+      #if User.update(params[:user_id], first_name: params[:user][:first_name], second_name: params[:user][:second_name])
       flash.now[:success] = "Изменения сохранены"
-      render 'edit'
+      redirect_to edit_user_path(params[:user_id])
     else
       render 'edit'
     end
   end
 
   def update_email
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     if @user.update_attributes(user_settings_email_params)
       flash.now[:success] = "Изменения сохранены"
       render 'edit'
@@ -75,12 +78,22 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     if @user.update_attributes(user_settings_password_params)
       flash.now[:success] = "Изменения сохранены"
       render 'edit'
     else
       render 'edit'
+    end
+  end
+
+  def update_confirmed
+    @user = User.find(params[:user_id])
+    if @user.update_attribute("is_confirmed", params[:user][:is_confirmed])
+      #if @user.update_attributes(user_settings_confirm_params)
+      redirect_to users_path, notice: "Изменения сохранены"
+    else
+      redirect_to users_path, notice: @user.errors
     end
   end
 
@@ -111,19 +124,27 @@ class UsersController < ApplicationController
     end
 
     def user_settings_password_params
-      params.require(:user).permit(:password, :password_confirmation)
+      #params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def user_settings_confirm_params
+      params.require(:user).permit(:is_confirmed)
     end
 
     def signed_in_user
       unless signed_in?
         store_location
-        redirect_to signin_url, notice: "Please sign in."
+        redirect_to signin_url, notice: "Для доступа войдите в свою учетную запись"
       end
     end
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      if current_user.admin?
+        admin_user
+      else 
+        @user = User.find(params[:id])
+        redirect_to(root_url) unless current_user?(@user)
+      end
     end
 
     def admin_user

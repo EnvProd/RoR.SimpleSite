@@ -7,7 +7,10 @@
       <th>Фамилия</th>
       <th>Email</th>
       <th>Created at</th>
-      <th>Latest login</th>
+      <th>Заходил на сайт</th>
+      <% if current_user.admin? %>
+          <th>Подтвержденный</th>
+      <% end %>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,7 +22,33 @@
         <td><%= user.second_name %></td>
         <td><%= user.email %></td>
         <td><%= user.created_at %></td>
-        <td><%= user.latest_login %></td>
+        <td><%= user.latest_signin %></td>
+        <% if current_user.admin? %>
+        <td>
+          <%= form_for user, url: {action: "update_confirmed", controller: "users", user_id: user.id}, method: :post do |f| %>
+            <%
+             if user.is_confirmed?
+              value = 'false'
+             else   
+              value = 'true'
+             end  
+            %>
+            <%= f.hidden_field :is_confirmed, value: value %>
+
+            <% if user.is_confirmed? %>
+                <button type="submit" name="commit"  class="btn btn-outline-success" title="Отключить доступ" data-disable-with="Update User">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+             <% else %>   
+                 <button type="submit" name="commit"  class="btn btn-outline-danger" title="Включить доступ" data-disable-with="Update User">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+             <% end %>  
+            
+
+          <% end %>
+          </td>
+        <% end %>
         <td>
 
           <%= link_to user, class: "btn btn-outline-primary" do %>
@@ -47,7 +76,3 @@
 </table>
 
 <%= will_paginate %>
-
-<br>
-
-<%= link_to 'New User', new_user_path %>

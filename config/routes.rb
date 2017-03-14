@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   match '/signup',    to: 'users#new',    via: 'get'
   match '/registred',    to: 'static_pages#user_need_confirmed',    via: 'get'
   resources :notifications
-  resources :users
+  resources :users  do
+    post :update_confirmed
+    post :update_name
+    post :update_email
+    post :update_password
+  end
   resources :sessions, only: [:new, :create, :destroy]
 
   # Помощь по Routes 
